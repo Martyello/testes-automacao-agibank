@@ -30,12 +30,14 @@ jobs:
         run: mvn clean test
         continue-on-error: true
 
+      # PASSO CORRIGIDO: Unificação Robusta
       - name: Unificar Resultados Allure
         if: always()
         run: |
-                mkdir -p all-results
-                cp -r teste-blogdoagi/target/allure-results/* all-results/ || true
-                cp -r teste-dogapi/target/allure-results/* all-results/ || true
+          mkdir -p all-results
+          # Copia os resultados se as pastas existirem, sem quebrar o build
+          [ -d "teste-blogdoagi/target/allure-results" ] && cp -r teste-blogdoagi/target/allure-results/* all-results/ || echo "Sem resultados Web"
+          [ -d "teste-dogapi/target/allure-results" ] && cp -r teste-dogapi/target/allure-results/* all-results/ || echo "Sem resultados API"
 
       - name: Carregar histórico do Allure (gh-pages)
         uses: actions/checkout@v4
@@ -49,7 +51,6 @@ jobs:
         uses: simple-elf/allure-report-action@master
         if: always()
         with:
-
           allure_results: "all-results"
           gh_pages: gh-pages-dir
           allure_report: allure-report
