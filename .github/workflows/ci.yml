@@ -28,7 +28,7 @@ jobs:
 
       - name: Executar Automação (Web, API e Performance)
         run: |
-            mvn clean test
+          mvn clean test
           # Força a execução e geração do relatório dentro do módulo
           cd teste-performance && mvn verify
         continue-on-error: true
