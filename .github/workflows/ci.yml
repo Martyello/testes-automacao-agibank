@@ -26,11 +26,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      # MUDANÇA AQUI: Adicionado 'verify' para gerar o HTML do JMeter
       - name: Executar Automação (Web, API e Performance)
         run: |
           mvn clean test
           mvn verify -pl teste-performance
+          cd teste-performance && mvn verify
         continue-on-error: true
 
       - name: Unificar Resultados Allure
