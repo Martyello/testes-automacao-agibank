@@ -62,7 +62,7 @@ jobs:
       - name: Integrar Relatório JMeter
         if: always()
         run: |
-           # Procura qualquer index.html que não esteja nas pastas do Allure
+          # Procura qualquer index.html que não esteja nas pastas do Allure
           REPORT_HTML=$(find . -name "index.html" | grep "jmeter" | head -n 1)
             
           if [ -n "$REPORT_HTML" ]; then
