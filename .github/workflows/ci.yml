@@ -28,9 +28,11 @@ jobs:
 
       - name: Executar Automação (Web, API e Performance)
         run: |
+          # 1. Executa testes de Web e API
           mvn clean test
-          # Força a execução e geração do relatório dentro do módulo
-          cd teste-performance && mvn verify
+          # 2. Executa Performance apontando diretamente para o arquivo do módulo (-f)
+          # Isso garante a criação da pasta target e do relatório HTML
+          mvn verify -f teste-performance/pom.xml
         continue-on-error: true
 
       - name: Unificar Resultados Allure
@@ -61,33 +63,34 @@ jobs:
       - name: Integrar Relatório JMeter
         if: always()
         run: |
-          # 1. Busca dinâmica por QUALQUER index.html gerado pelo JMeter
-           REPORT_HTML=$(find . -path "*/target/jmeter/reports/*/index.html" | head -n 1)
-            
-           if [ -n "$REPORT_HTML" ]; then
-             REPORT_DIR=$(dirname "$REPORT_HTML")
-             echo "Relatório JMeter localizado em: $REPORT_DIR"
-            
-            # 2. Garante permissões
-             sudo chmod -R 777 allure-report allure-history
-            
-            # 3. Injeta na raiz do report atual
+          # 1. Busca dinâmica por QUALQUER index.html dentro de pastas 'reports' do JMeter
+          REPORT_HTML=$(find . -name "index.html" | grep "reports" | head -n 1)
+          
+          if [ -n "$REPORT_HTML" ]; then
+            REPORT_DIR=$(dirname "$REPORT_HTML")
+            echo "Relatório JMeter localizado em: $REPORT_DIR"
+          
+            # 2. Garante permissões nas pastas geradas pelo Allure
+            sudo chmod -R 777 allure-report allure-history
+          
+            # 3. Injeta na raiz do report atual (para o link fixo funcionar)
             mkdir -p allure-report/performance
             cp -r $REPORT_DIR/* allure-report/performance/
-            
-           # 4. Injeta na pasta numerada do histórico (ex: /36/performance)
-          CURRENT_RUN=$(ls -t allure-history | grep -E '^[0-9]+$' | head -n 1)
-          if [ -n "$CURRENT_RUN" ]; then
-            mkdir -p allure-history/$CURRENT_RUN/performance
-            cp -r allure-report/performance/* allure-history/$CURRENT_RUN/performance/
-            echo "Sucesso: Relatório injetado na run #$CURRENT_RUN"
-          fi
+          
+            # 4. Injeta na pasta numerada do histórico (ex: /36/performance)
+            CURRENT_RUN=$(ls -t allure-history | grep -E '^[0-9]+$' | head -n 1)
+            if [ -n "$CURRENT_RUN" ]; then
+              mkdir -p allure-history/$CURRENT_RUN/performance
+              cp -r allure-report/performance/* allure-history/$CURRENT_RUN/performance/
+              echo "Sucesso: Relatório injetado na run #$CURRENT_RUN"
+            fi
           else
-           echo "ERRO: O relatório do JMeter (index.html) não foi gerado em nenhuma pasta target."
-           # Diagnóstico: lista o que foi gerado
-           find . -maxdepth 4 -name "target"
-           exit 1
-           fi
+            echo "ERRO: O relatório do JMeter (index.html) não foi localizado."
+            echo "Diagnóstico de arquivos gerados:"
+            find . -name "*.csv" -o -name "*.jtl"
+            exit 1
+          fi
+
       - name: Deploy para GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
