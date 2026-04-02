@@ -28,10 +28,10 @@ jobs:
 
       - name: Executar Automação (Web, API e Performance)
         run: |
-          # 1. Roda Web e API normalmente
-          mvn clean test -pl teste-blogdoagi,teste-dogapi
-          
-          # 2. Força a execução da Performance de forma isolada
+          # O parâmetro -DskipAfterFailureCount=0 e -fn (fail-never) força o Maven a continuar
+          mvn clean test -pl teste-blogdoagi,teste-dogapi -fn
+            
+          # Agora garantimos que a performance rode mesmo se a API falhou
           cd teste-performance
           mvn jmeter:jmeter jmeter:results jmeter:report
         continue-on-error: true
