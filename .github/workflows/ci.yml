@@ -28,10 +28,13 @@ jobs:
 
       - name: Executar Automação (Web, API e Performance)
         run: |
-          # 1. Roda Web e API (ignora falhas para seguir adiante)
+          # 1. Roda Web e API (continua mesmo com falhas)
           mvn clean test -pl teste-blogdoagi,teste-dogapi -fn
+            
+          # 2. Performance: Executa a tríade necessária do plugin
           cd teste-performance
-          mvn jmeter:jmeter jmeter:results
+          # Primeiro configura, depois executa, depois processa resultados
+          mvn jmeter:configure jmeter:jmeter jmeter:results
         continue-on-error: true
 
       - name: Unificar Resultados Allure
