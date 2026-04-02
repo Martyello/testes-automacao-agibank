@@ -58,14 +58,19 @@ jobs:
           allure_history: allure-history
           keep_reports: 20
 
-      # ORGANIZAÇÃO FINAL: Coloca o JMeter dentro da pasta do Allure para o Deploy
       - name: Integrar Relatório JMeter
         if: always()
         run: |
-          mkdir -p allure-history/performance
-          if [ -d "teste-performance/target/jmeter/reports/blazedemo_test" ]; then
-            cp -r teste-performance/target/jmeter/reports/blazedemo_test/* allure-history/performance/
-          fi
+           # Garante que temos permissão na pasta antes de criar a subpasta
+           sudo chmod -R 777 allure-history
+           mkdir -p allure-history/performance
+           
+           if [ -d "teste-performance/target/jmeter/reports/blazedemo_test" ]; then
+             cp -r teste-performance/target/jmeter/reports/blazedemo_test/* allure-history/performance/
+             echo "Relatório do JMeter copiado com sucesso para allure-history/performance/"
+           else
+             echo "Aviso: Pasta do relatório JMeter não encontrada em teste-performance/target/jmeter/reports/blazedemo_test"
+           fi
 
       - name: Deploy para GitHub Pages
         if: always()
