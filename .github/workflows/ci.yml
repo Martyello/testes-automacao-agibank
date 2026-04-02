@@ -29,8 +29,7 @@ jobs:
       - name: Executar Automação (Web, API e Performance)
         run: |
           mvn clean test -pl teste-blogdoagi,teste-dogapi -fn
-          mvn clean verify -f teste-performance/pom.xml -DskipTests=false
-        continue-on-error: true
+          mvn clean verify -f teste-performance/pom.xml -DskipTests=false -fn
 
       - name: Unificar Resultados Allure
         if: always()
