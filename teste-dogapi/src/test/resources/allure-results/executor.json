@@ -1,0 +1,8 @@
+{
+  "name": "IntelliJ",
+  "type": "API Test",
+  "url": "http://localhost",
+  "buildName": "DOG Testes de API",
+  "buildUrl": "https://dog.ceo/dog-api/documentation/",
+  "reportName": "Allure Report - Local Run"
+}

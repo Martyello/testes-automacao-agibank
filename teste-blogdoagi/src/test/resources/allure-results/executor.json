@@ -1,0 +1,8 @@
+{
+  "name": "IntelliJ",
+  "type": "Web Test",
+  "url": "http://localhost",
+  "buildName": "Blog do Agibank",
+  "buildUrl": "https://blogdoagi.com.br/",
+  "reportName": "Allure Report - Local Run"
+}

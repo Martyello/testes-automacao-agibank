@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["status", "message", "code"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["error"]
+    },
+    "message": {
+      "type": "string"
+    },
+    "code": {
+      "type": "integer"
+    }
+  }
+}

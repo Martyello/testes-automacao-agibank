@@ -1,5 +1,6 @@
 package web;
 
+import io.qameta.allure.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,6 +12,9 @@ import java.util.List;
 import org.openqa.selenium.chrome.ChromeOptions;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+@Feature("Lupa de Pesquisa")
+@Tag("Pesquisa de Posts")
+@Owner("Marcelo")
 public class BuscaBlogAgibankTest {
 
     private WebDriver browser;
@@ -44,7 +48,9 @@ public class BuscaBlogAgibankTest {
     }
 
     @Test
-    @DisplayName("Validar busca funcional com termos genéricos")
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Pesquisa de Posts")
+    @DisplayName("Validar busca com termo de artigo existente")
     public void validarBuscaComSucesso() {
         var key = "finanças";
 
@@ -58,6 +64,9 @@ public class BuscaBlogAgibankTest {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Pesquisa de Posts")
+    @DisplayName("Validar busca funcional sem textos")
     public void testarBuscaVazia() {
 
         browser.get(BASE_URL + "?s=");
@@ -75,6 +84,9 @@ public class BuscaBlogAgibankTest {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Pesquisa de Posts")
+    @DisplayName("Validar busca funcional com termos genéricos")
     public void validarInputInvalido() {
         var dummyTerm = "@#$%";
         browser.get(BASE_URL + "?s=" + dummyTerm);
@@ -90,6 +102,9 @@ public class BuscaBlogAgibankTest {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Pesquisa de Posts")
+    @DisplayName("Validar busca funcional com termos inexistente")
     public void buscarTermoInexistente() {
 
         String weirdQuery = "Parafusos99x";

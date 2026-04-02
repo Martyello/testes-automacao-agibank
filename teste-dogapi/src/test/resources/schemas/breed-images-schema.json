@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": ["status", "message"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["success"]
+    },
+    "message": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^https://images.dog.ceo/breeds/.+\\.(jpg|jpeg|png|gif)$"
+      }
+    }
+  }
+}

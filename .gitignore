@@ -37,3 +37,19 @@ build/
 
 ### Mac OS ###
 .DS_Store
+# Pastas de build do Maven
+target/
+
+# Pastas de relatórios e resultados do Allure (Raiz e Módulos)
+**/allure-results/
+**/allure-report/
+**/.allure/
+
+# Arquivos de configuração do IntelliJ/IDE
+.idea/
+*.iml
+*.iws
+
+# Log de erros e arquivos temporários
+*.log
+.DS_Store
