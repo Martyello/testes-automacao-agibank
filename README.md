@@ -52,10 +52,10 @@ Teste de carga e resiliência na plataforma [BlazeDemo](https://www.blazedemo.co
 
 Os resultados são consolidados e publicados automaticamente a cada execução da pipeline.
 
-* 🧪 **[Dashboard Allure Report](https://martyello.github.io/testes-automacao-agibank/)**
+* 🧪 **[Dashboard Allure Report](https://martyello.github.io/testes-automacao-Maven/)**
   *(Visão consolidada de Web e API com screenshots e histórico de tendências)*
 
-* 📈 **[Relatório de Performance (JMeter HTML)](https://martyello.github.io/testes-automacao-agibank/performance/)**
+* 📈 **[Relatório de Performance (JMeter HTML)](https://martyello.github.io/testes-automacao-Maven/performance/)**
   *(Métricas detalhadas de Throughput, Latência e Gráficos de Over Time)*
 ---
 
